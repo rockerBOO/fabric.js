@@ -9997,7 +9997,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
      * @return {fabric.Pattern} thisArg
      */
     initialize: function(options, callback) {
-      options || (options = { });
+      options || (options = {});
 
       this.id = fabric.Object.__uid++;
       this.setOptions(options);
@@ -10023,14 +10023,14 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
      */
     toObject: function(propertiesToInclude) {
       var NUM_FRACTION_DIGITS = fabric.Object.NUM_FRACTION_DIGITS,
-          source, object;
+        source, object;
 
       // <img> element
-      if (typeof this.source.src === 'string') {
+      if (this.source && typeof this.source.src === 'string') {
         source = this.source.src;
       }
       // <canvas> element
-      else if (typeof this.source === 'object' && this.source.toDataURL) {
+      else if (this.source && typeof this.source === 'object' && this.source.toDataURL) {
         source = this.source.toDataURL();
       }
 
@@ -10056,11 +10056,11 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
      */
     toSVG: function(object) {
       var patternSource = typeof this.source === 'function' ? this.source() : this.source,
-          patternWidth = patternSource.width / object.width,
-          patternHeight = patternSource.height / object.height,
-          patternOffsetX = this.offsetX / object.width,
-          patternOffsetY = this.offsetY / object.height,
-          patternImgSrc = '';
+        patternWidth = patternSource.width / object.width,
+        patternHeight = patternSource.height / object.height,
+        patternOffsetX = this.offsetX / object.width,
+        patternOffsetY = this.offsetY / object.height,
+        patternImgSrc = '';
       if (this.repeat === 'repeat-x' || this.repeat === 'no-repeat') {
         patternHeight = 1;
         if (patternOffsetY) {
@@ -10082,16 +10082,16 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
       }
 
       return '<pattern id="SVGID_' + this.id +
-                    '" x="' + patternOffsetX +
-                    '" y="' + patternOffsetY +
-                    '" width="' + patternWidth +
-                    '" height="' + patternHeight + '">\n' +
-               '<image x="0" y="0"' +
-                      ' width="' + patternSource.width +
-                      '" height="' + patternSource.height +
-                      '" xlink:href="' + patternImgSrc +
-               '"></image>\n' +
-             '</pattern>\n';
+        '" x="' + patternOffsetX +
+        '" y="' + patternOffsetY +
+        '" width="' + patternWidth +
+        '" height="' + patternHeight + '">\n' +
+        '<image x="0" y="0"' +
+        ' width="' + patternSource.width +
+        '" height="' + patternSource.height +
+        '" xlink:href="' + patternImgSrc +
+        '"></image>\n' +
+        '</pattern>\n';
     },
     /* _TO_SVG_END_ */
 
